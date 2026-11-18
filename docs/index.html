@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이원섭 · 개발 포트폴리오</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  @page { size: 297mm 210mm; margin: 0; }
+  :root {
+    --bg: #0a1530;
+    --panel: #10204a;
+    --panel2: #142859;
+    --line: #22397a;
+    --text: #e8eefa;
+    --muted: #9aabcd;
+    --accent: #5b9bff;
+    --accent2: #8fbcff;
+    --warm: #ffc66b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: "Pretendard", "Noto Sans CJK KR", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    background: #050b1c; color: var(--text);
+    font-size: 11.3pt; line-height: 1.58; letter-spacing: -0.01em;
+    word-break: keep-all;
+  }
+  .page {
+    width: 297mm; height: 210mm; margin: 10mm auto; padding: 12mm 16mm 10mm;
+    background: var(--bg); position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    page-break-after: always; break-after: page;
+  }
+  @media print { body { background: var(--bg); } .page { margin: 0; } }
+  @media screen and (max-width: 1150px) { .page { transform-origin: top left; } }
+
+  .hd { display: flex; justify-content: space-between; align-items: baseline;
+        font-size: 8.5pt; color: var(--muted); border-bottom: 1px solid var(--line);
+        padding-bottom: 3mm; margin-bottom: 6mm; letter-spacing: 0.02em; }
+  .hd b { color: var(--text); font-weight: 600; }
+  .ft { margin-top: auto; display: flex; justify-content: space-between; font-size: 8pt;
+        color: var(--muted); padding-top: 3mm; letter-spacing: 0.08em; }
+
+  h1 { font-size: 26pt; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; }
+  h2 { font-size: 22pt; font-weight: 800; letter-spacing: -0.03em; line-height: 1.25; }
+  h2 small { display: block; font-size: 8.5pt; font-weight: 600; color: var(--accent);
+             letter-spacing: 0.18em; margin-bottom: 1.5mm; }
+  h3 { font-size: 12.8pt; font-weight: 700; margin-bottom: 2mm; }
+  .lead { color: var(--muted); margin-top: 2.5mm; font-size: 11.6pt; }
+  .muted { color: var(--muted); }
+  .accent { color: var(--accent2); }
+
+  .grid { display: grid; gap: 5mm; }
+  .g2 { grid-template-columns: 1fr 1fr; }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .g4 { grid-template-columns: repeat(4, 1fr); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 3mm; padding: 5.5mm 6mm; }
+  .card.hi { background: var(--panel2); border-color: #2f4f9e; }
+  .label { font-size: 8.3pt; font-weight: 700; color: var(--accent); letter-spacing: 0.16em; margin-bottom: 1.5mm; }
+
+  ul.dot { list-style: none; }
+  ul.dot li { position: relative; padding-left: 3.6mm; margin-bottom: 1.8mm; }
+  ul.dot li::before { content: ""; position: absolute; left: 0; top: 2.3mm; width: 1.3mm; height: 1.3mm;
+                      border-radius: 50%; background: var(--accent); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 1.6mm; }
+  .chip { font-size: 9.6pt; padding: 1.1mm 3mm; border-radius: 10mm; border: 1px solid var(--line);
+          background: rgba(91,155,255,0.08); color: var(--accent2); white-space: nowrap; }
+
+  table.kv { width: 100%; border-collapse: collapse; }
+  table.kv th { text-align: left; font-weight: 600; color: var(--muted); width: 22mm; padding: 1.6mm 0; vertical-align: top; font-size: 10.4pt; }
+  table.kv td { padding: 1.6mm 0; }
+
+  .flow { display: flex; align-items: stretch; gap: 0; }
+  .flow .st { flex: 1; background: var(--panel); border: 1px solid var(--line); border-radius: 2.5mm;
+              padding: 3.6mm 3mm; text-align: center; font-size: 10pt; }
+  .flow .st b { display: block; font-size: 11.4pt; margin-bottom: 0.8mm; }
+  .flow .st span { color: var(--muted); font-size: 9.3pt; }
+  .flow .ar { width: 6mm; display: flex; align-items: center; justify-content: center; color: var(--accent); font-weight: 700; }
+
+  .stat b { display: block; font-size: 27pt; font-weight: 800; color: var(--accent2); letter-spacing: -0.03em; line-height: 1.1; }
+  .stat span { color: var(--muted); font-size: 10pt; }
+
+  .pdr { display: grid; grid-template-columns: 17mm 1fr; row-gap: 2.4mm; font-size: 10.6pt; }
+  .pdr dt { font-size: 8.2pt; font-weight: 700; letter-spacing: 0.12em; padding-top: 0.6mm; }
+  .pdr dt.p { color: #ff8f8f; } .pdr dt.d { color: var(--accent2); } .pdr dt.r { color: #7fe0b0; }
+
+  .tl { list-style: none; }
+  .tl li { display: grid; grid-template-columns: 38mm 1fr; padding: 2.3mm 0; border-bottom: 1px dashed var(--line); font-size: 10.6pt; }
+  .tl li:last-child { border-bottom: none; }
+  .tl .when { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .tl .tag { font-size: 7.5pt; color: var(--warm); margin-left: 1.5mm; }
+
+  /* cover */
+  .cover { justify-content: space-between; background:
+           radial-gradient(120mm 90mm at 85% 15%, rgba(91,155,255,0.22), transparent 70%),
+           radial-gradient(90mm 70mm at 10% 100%, rgba(91,155,255,0.12), transparent 70%), var(--bg); }
+  .cover .role { font-size: 10pt; font-weight: 700; letter-spacing: 0.22em; color: var(--accent); }
+  .cover h1 { font-size: 40pt; margin-top: 4mm; }
+  .cover .title { font-size: 20pt; font-weight: 700; margin-top: 2mm; }
+  .toc { list-style: none; columns: 2; column-gap: 10mm; font-size: 10pt; }
+  .toc li { padding: 1.2mm 0; border-bottom: 1px solid var(--line); break-inside: avoid; }
+  .toc li span { color: var(--accent); font-weight: 700; display: inline-block; width: 13mm; }
+</style>
+</head>
+<body>
+
+<!-- 01 COVER -->
+<section class="page cover">
+  <div class="hd" style="border:none"><span><b>이원섭</b> / 개발 포트폴리오</span><span>2026</span></div>
+  <div>
+    <div class="role">BACKEND · WEB FULL-STACK</div>
+    <h1>이원섭</h1>
+    <div class="title">웹 풀스택 개발자 포트폴리오</div>
+    <p class="lead" style="max-width:150mm">Java/Spring 기반 공공·기업 업무 시스템을 개발해 왔고,<br>
+      서버 운영과 자동 배포까지 직접 맡아 개발부터 운영까지 책임졌습니다.</p>
+    <div class="chips" style="margin-top:6mm">
+      <span class="chip">경력 4년 10개월</span><span class="chip">정산·업무 시스템</span>
+      <span class="chip">AI 데이터 모델</span><span class="chip">실시간 TCP 인터페이스</span><span class="chip">서버 운영 · CI/CD</span>
+    </div>
+  </div>
+  <div class="grid g2" style="align-items:end">
+    <ul class="toc">
+      <li><span>02</span>프로필 · 경력</li>
+      <li><span>03–04</span>영화 정산 시스템</li>
+      <li><span>05</span>AI 직종 재분류 모델</li>
+      <li><span>06</span>버스정보시스템(BIS)</li>
+      <li><span>07</span>통합 홈페이지 · 입찰정보</li>
+      <li><span>08</span>서버 운영 · CI/CD</li>
+      <li><span>09</span>개인 프로젝트</li>
+      <li><span>10</span>전체 이력 · 연락처</li>
+    </ul>
+    <table class="kv" style="width:auto; margin-left:auto">
+      <tr><th>Email</th><td>sub940522@naver.com</td></tr>
+      <tr><th>Phone</th><td>010-9290-7545</td></tr>
+      <tr><th>GitHub</th><td>github.com/sub940522-dev/career-portfolio</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 02 PROFILE -->
+<section class="page">
+  <div class="hd"><span><b>이원섭</b> / 개발 포트폴리오</span><span>PROFILE / EXPERIENCE</span></div>
+  <h2><small>PROFILE</small>이원섭 · 4년 10개월 차 웹 풀스택 개발자</h2>
+  <p class="lead">Java/Spring 기반 업무 시스템의 백엔드와 화면을 함께 개발하고, 서버 운영·배포 자동화까지 경험했습니다.</p>
+
+  <div class="grid g3" style="margin-top:5mm">
+    <div class="card"><div class="label">BUSINESS SYSTEM</div><h3>업무 시스템 개발</h3>
+      <p class="muted">영화 정산·CMS, 통합 홈페이지, 입찰정보 시스템 등 공공·기업 업무 시스템을 화면부터 로직까지 개발했습니다.</p></div>
+    <div class="card"><div class="label">DATA · INTERFACE</div><h3>데이터와 실시간 연동</h3>
+      <p class="muted">1,800만 건 데이터의 직종 예측 모델을 단독 개발했고, 버스 단말과 웹을 잇는 TCP 소켓 인터페이스를 만들었습니다.</p></div>
+    <div class="card"><div class="label">OPERATION</div><h3>개발부터 운영까지</h3>
+      <p class="muted">서버 담당자 공백을 맡아 서버를 운영했고, GitLab·Jenkins로 커밋 즉시 배포되는 환경을 구축했습니다.</p></div>
+  </div>
+
+  <div class="grid" style="grid-template-columns: 1.25fr 1fr; margin-top:4mm">
+    <div>
+      <div class="label">CAREER</div>
+      <ul class="tl">
+        <li><span class="when">2023.03 – 2026.05</span><span><b>공공·기업 SI 개발사</b> <span class="muted">· 주임 → 책임</span><br>
+          <span class="muted">영화 정산 시스템, 문화재단 통합 홈페이지, 안전보건공단 AI·IoT 사업, 입찰정보 시스템 개발</span></span></li>
+        <li><span class="when">2021.07 – 2023.03</span><span><b>공간정보 SI 기업</b> <span class="muted">· 주임</span><br>
+          <span class="muted">충남 BIS 구축, 도로변경정보 시스템 개선·유지관리, 사내 서버 운영 및 CI/CD 구축</span></span></li>
+      </ul>
+      <div class="label" style="margin-top:5mm">EDUCATION</div>
+      <ul class="dot muted">
+        <li>가톨릭관동대학교 소프트웨어학과 학사</li>
+        <li>전자정부 표준프레임워크 개발자 실무 (NIA, 2023)</li>
+        <li>IoT 오픈 플랫폼 기반 제품서비스 개발 (KETI, 2023)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="label">SKILLS</div>
+      <table class="kv">
+        <tr><th>Backend</th><td>Java · Spring(전자정부프레임워크) · JSP · Python</td></tr>
+        <tr><th>Frontend</th><td>JavaScript · 그리드·에디터·리포트 솔루션 연동</td></tr>
+        <tr><th>Database</th><td>Oracle · MySQL · PostgreSQL</td></tr>
+        <tr><th>Infra·CI/CD</th><td>Linux · Apache · Tomcat · Docker · GitLab · Jenkins</td></tr>
+        <tr><th>통신</th><td>TCP Socket · MQTT · REST API</td></tr>
+        <tr><th>AI·데이터</th><td>XGBoost · RandomForest · 데이터 전처리</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="ft"><span>LEE WONSUB · 2026</span><span>02 / 10</span></div>
+</section>
+
+<!-- 03 SHOWBOX -->
+<section class="page">
+  <div class="hd"><span><b>이원섭</b> / 개발 포트폴리오</span><span>FILM SETTLEMENT SYSTEM</span></div>
+  <h2><small>2025.11 – 2026.05 · 쇼박스</small>영화 정산 시스템 신규 구축</h2>
+  <p class="lead">투자·배급사의 2010년 이후 전 작품과 외부 계약을 다루는 정산 시스템을 기존 사이트를 토대로 재설계해 새로 구축했습니다.</p>
+
+  <div class="grid" style="grid-template-columns: 1fr 1.35fr; margin-top:5mm">
+    <div class="card">
+      <div class="label">OVERVIEW</div>
+      <table class="kv">
+        <tr><th>역할</th><td>CMS·정산시스템 개발팀(A팀) 팀장 직속 개발</td></tr>
+        <tr><th>팀 구성</th><td>약 12명 · 3개 팀<br><span class="muted">A 정산·CMS / B 외부 연동 / C 퍼블리싱·ERP(더존) 연계</span></td></tr>
+        <tr><th>기술</th><td>Java · JavaScript · Oracle · IntelliJ<br><span class="muted">리포트·그리드·에디터·보안·암호화 솔루션 연동</span></td></tr>
+        <tr><th>진행</th><td>설계 반영 개발 → 테스트 → 가오픈</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="label">MY SCOPE · 정산 업무 전 메뉴 개발 참여</div>
+      <div class="chips" style="margin-top:1mm">
+        <span class="chip">영화 등록</span><span class="chip">기획개발 작품정보</span><span class="chip">지방 배급사 배분</span>
+        <span class="chip">배급대행</span><span class="chip">부분투자 계약</span><span class="chip">투자채권 관리</span>
+        <span class="chip">예산 관리</span><span class="chip">비용 관리</span><span class="chip">매출 관리</span>
+        <span class="chip">정산 관리</span><span class="chip">사용자·권한 관리</span><span class="chip">CMS</span>
+      </div>
+      <p class="muted" style="margin-top:3mm">계약(지분율·부가계약)에서 매출·비용, 최종 정산까지 이어지는 흐름을 메뉴 단위로 구현했습니다.</p>
+    </div>
+  </div>
+
+  <div class="label" style="margin-top:6mm">SETTLEMENT FLOW · 계약 조건에 따라 수익을 나누는 흐름</div>
+  <div class="flow">
+    <div class="st"><b>극장 매출</b><span>관객 수 × 객단가</span></div><div class="ar">→</div>
+    <div class="st"><b>세금·기금 공제</b><span>부가세 · 영화발전기금</span></div><div class="ar">→</div>
+    <div class="st"><b>극장 부율 정산</b><span>극장 ↔ 배급사</span></div><div class="ar">→</div>
+    <div class="st"><b>배급수수료</b><span>배급사 몫 공제</span></div><div class="ar">→</div>
+    <div class="st"><b>비용 회수</b><span>제작비 · 마케팅비</span></div><div class="ar">→</div>
+    <div class="st" style="border-color:#2f4f9e;background:var(--panel2)"><b>지분율 배분</b><span>투자사 · 제작사</span></div>
+  </div>
+  <p class="muted" style="margin-top:2.5mm; font-size:9pt">부가판권(IPTV·OTT), 지방 배급, 배급대행, 부분투자 계약은 계약 조건별로 따로 정산한 뒤 합산합니다.</p>
+  <div class="ft"><span>LEE WONSUB · 2026</span><span>03 / 10</span></div>
+</section>
+
+<!-- 04 SHOWBOX PROBLEMS -->
+<section class="page">
+  <div class="hd"><span><b>이원섭</b> / 개발 포트폴리오</span><span>FILM SETTLEMENT · PROBLEM SOLVING</span></div>
+  <h2><small>PROBLEM SOLVING</small>대규모 협업과 보안 환경에서 일정 지키기</h2>
+  <p class="lead">12명이 나눠 개발하는 프로젝트에서 공통 변경, 근무 시간 차이, 개발 환경 제약을 이렇게 풀었습니다.</p>
+
+  <div class="grid g3" style="margin-top:6mm; flex:1">
+    <div class="card">
+      <h3>01 · 자주 바뀌는 공통 영역</h3>
+      <dl class="pdr">
+        <dt class="p">PROBLEM</dt><dd>여러 메뉴가 공유하는 공통 로직이 자주 바뀌어, 한 번의 변경이 다른 팀 작업에 연쇄 영향을 줬습니다.</dd>
+        <dt class="d">DECISION</dt><dd>공통부 전담 팀을 따로 두어 변경 창구를 하나로 모았습니다. 소스 구조를 먼저 파악한 뒤 각 메뉴의 로직을 공통부와 최대한 독립적으로 분리했습니다.</dd>
+        <dt class="r">RESULT</dt><dd>공통 변경이 메뉴 개발에 주는 영향이 줄어 일정대로 진행했습니다.</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h3>02 · 원격지 근무와 시간 차</h3>
+      <dl class="pdr">
+        <dt class="p">PROBLEM</dt><dd>팀원 대부분이 원격지 근무라 일하는 시간대가 달라 바로 확인하기 어려웠습니다.</dd>
+        <dt class="d">DECISION</dt><dd>급한 건은 Teams로 실시간 소통하고, 결정 사항과 질의는 게시판에 남겨 비동기로 답을 받는 방식을 정착시켰습니다.</dd>
+        <dt class="r">RESULT</dt><dd>질의와 결정이 기록으로 남아 시간이 달라도 협업 공백 없이 진행했습니다.</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h3>03 · 보안 VM 개발 환경</h3>
+      <dl class="pdr">
+        <dt class="p">PROBLEM</dt><dd>보안 규정상 VM 안에서만 개발했고, 복사·붙여넣기와 외부 도구 사용, 소스 반출이 제한됐습니다.</dd>
+        <dt class="d">DECISION</dt><dd>기존 코드의 구조와 패턴을 분석해 요구사항에 맞게 단계적으로 바꿔 나갔습니다. 복잡한 부분은 관리자 승인 절차를 거쳐 필요한 범위만 반출해 검토했습니다.</dd>
+        <dt class="r">RESULT</dt><dd>보안 규정을 지키면서 일정 안에 개발을 마쳤습니다.</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="ft"><span>LEE WONSUB · 2026</span><span>04 / 10</span></div>
+</section>
+
+<!-- 05 AI -->
+<section class="page">
+  <div class="hd"><span><b>이원섭</b> / 개발 포트폴리오</span><span>AI · DATA</span></div>
+  <h2><small>2024.07 – 2024.11 · 안전보건공단</small>특수건강검진 DB 직종 재분류 AI 모델</h2>
+  <p class="lead">10년 넘게 직종·산업현장 정보가 비어 있던 특수건강검진 데이터를 AI 모델로 채웠습니다. 모델 개발은 Python으로 단독 수행하고 PM 검수를 받았습니다.</p>
+
+  <div class="grid g4" style="margin-top:6mm">
+    <div class="card stat"><b>1,800만+</b><span>직종을 채워야 할 누락 데이터</span></div>
+    <div class="card stat"><b>10만</b><span>학습에 쓴 정답 데이터</span></div>
+    <div class="card stat"><b>약 92%</b><span>XGBoost 모델 정확도</span></div>
+    <div class="card stat"><b>70%</b><span>전체 작업 중 전처리 비중</span></div>
+  </div>
+
+  <div class="label" style="margin-top:6mm">PIPELINE</div>
+  <div class="flow">
+    <div class="st"><b>데이터 정제</b><span>텍스트 정제 · 코드 정리</span></div><div class="ar">→</div>
+    <div class="st"><b>피처 구성</b><span>사업장명 · 업종 · 유해인자 · 공정명</span></div><div class="ar">→</div>
+    <div class="st"><b>모델 비교</b><span>RandomForest vs XGBoost(GPU)</span></div><div class="ar">→</div>
+    <div class="st"><b>예측 · 검증</b><span>PM 검수</span></div><div class="ar">→</div>
+    <div class="st" style="border-color:#2f4f9e;background:var(--panel2)"><b>납품</b><span>예측 시스템 · 보고서 · Docker</span></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:6mm">
+    <div class="card">
+      <h3>전처리에서 부딪힌 문제</h3>
+      <ul class="dot">
+        <li>유해인자 종류가 매우 많아 원-핫 인코딩 차원이 크게 늘어 처리 시간이 길어졌습니다.</li>
+        <li>업종·직종 클래스 불균형과 자유 입력 텍스트를 정제·보정했습니다.</li>
+        <li>RandomForest와 XGBoost를 비교하고 GPU 가속을 적용해 학습 시간을 줄였습니다.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>운영 방식</h3>
+      <ul class="dot">
+        <li><b>1차</b> · 매달 들어오는 신규 데이터(1만 건 이하)에 직종을 바로 채워, 앞으로는 정상 관리되게 했습니다.</li>
+        <li><b>2차</b> · 그동안 쌓인 누락 데이터도 순차적으로 예측해 보완하도록 설계했습니다.</li>
+        <li>최종 산출물을 Docker 이미지로 패키징해 실행 환경 차이 없이 제출했습니다.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft"><span>LEE WONSUB · 2026</span><span>05 / 10</span></div>
+</section>
+
+<!-- 06 BIS -->
+<section class="page">
+  <div class="hd"><span><b>이원섭</b> / 개발 포트폴리오</span><span>REAL-TIME INTERFACE</span></div>
+  <h2><small>2021.07 – 2022.03 · 충청남도</small>노선버스 운행정보시스템(BIS) 구축</h2>
+  <p class="lead">신입 첫 프로젝트. 버스 단말의 위치 정보를 웹으로 실시간 전달하는 TCP 소켓 인터페이스와 사용자·관리자 웹, 도청 관리 사이트를 개발했습니다.</p>
+
+  <div class="label" style="margin-top:6mm">SYSTEM · 담당 구간 강조</div>
+  <div class="flow">
+    <div class="st"><b>버스 단말기</b><span>약 30대 · GPS</span></div><div class="ar">→</div>
+    <div class="st"><b>수집서버</b><span>위치 정보 수신</span></div><div class="ar">⇄</div>
+    <div class="st" style="border-color:#2f4f9e;background:var(--panel2)"><b>송수신 인터페이스</b><span>Java · TCP Socket</span></div><div class="ar">→</div>
+    <div class="st"><b>DB</b><span>운행 정보</span></div><div class="ar">→</div>
+    <div class="st" style="border-color:#2f4f9e;background:var(--panel2)"><b>웹 · 관리 사이트</b><span>사용자 · 관리자 · 도청</span></div>
+  </div>
+
+  <div class="grid g3" style="margin-top:6mm">
+    <div class="card">
+      <h3>양방향 통신 협업</h3>
+      <dl class="pdr">
+        <dt class="p">PROBLEM</dt><dd>단말 업체와 양방향으로 통신해야 해서 한쪽만 맞아서는 동작하지 않았습니다.</dd>
+        <dt class="d">DECISION</dt><dd>명세서의 바이트 길이대로 전문이 오는지, 양쪽 포트가 열렸는지 단계별로 확인했습니다. 처리 함수와 방식을 상대 업체와 통일했습니다.</dd>
+        <dt class="r">RESULT</dt><dd>통신이 안정되어 시범운영까지 진행했습니다.</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h3>현장 변수 검증</h3>
+      <dl class="pdr">
+        <dt class="p">PROBLEM</dt><dd>Wi-Fi 끊김, 시동만 켠 버스가 움직이기만 해도 운행 중으로 잡히는 문제가 있었습니다.</dd>
+        <dt class="d">DECISION</dt><dd>시범운영 기간에 직접 버스에 타서 실시간 수신과 표시를 확인하며 판단 기준을 보정했습니다.</dd>
+        <dt class="r">RESULT</dt><dd>실제 운행 상황에 맞는 위치 정보를 보여줬습니다.</dd>
+      </dl>
+    </div>
+    <div class="card hi">
+      <h3>처음 해보는 기술</h3>
+      <p class="muted">TCP 소켓 통신은 이 프로젝트에서 처음 다뤘습니다. 자료를 찾아가며 직접 구현했고, 막히는 부분은 협력 업체와 함께 풀었습니다.</p>
+      <p style="margin-top:3mm">모르는 기술도 끝까지 파고들어 결과를 내는 방식을 이때 익혔습니다.</p>
+    </div>
+  </div>
+  <div class="ft"><span>LEE WONSUB · 2026</span><span>06 / 10</span></div>
+</section>
+
+<!-- 07 INCHEON + G2B -->
+<section class="page">
+  <div class="hd"><span><b>이원섭</b> / 개발 포트폴리오</span><span>WEB PLATFORM · DATA COLLECTION</span></div>
+  <div class="grid g2" style="flex:1; gap:8mm">
+    <div style="display:flex; flex-direction:column">
+      <h2><small>2024.09 – 2025.10 · 인천문화재단</small>문화정보 사이트 18개 통합 구축·유지보수</h2>
+      <p class="lead">인천의 문화정보 사이트 18개를 하나로 합친 통합 홈페이지를 구축하고 유지보수까지 맡았습니다.</p>
+      <div class="chips" style="margin-top:4mm">
+        <span class="chip">CMS 관리자</span><span class="chip">게시판</span><span class="chip">프로그램 예약·신청</span>
+        <span class="chip">회원</span><span class="chip">데이터 이관</span>
+      </div>
+      <div class="card" style="margin-top:5mm">
+        <ul class="dot">
+          <li><b>데이터 이관</b> · 재단과 협의해 보존 기간 등 이관 기준을 정하고, 필요한 데이터만 추려 전처리했습니다.</li>
+          <li><b>품질·보안</b> · 웹 접근성 인증과 보안 점검에 대응했습니다.</li>
+          <li><b>해킹대회</b> · 통합 사이트를 대상으로 열린 인천시 대학생 해킹대회를 문제없이 마쳤습니다.</li>
+        </ul>
+      </div>
+      <div class="card hi" style="margin-top:4mm">
+        <dl class="pdr">
+          <dt class="p">PROBLEM</dt><dd>사이트마다 1~2명이던 담당자가 통합 후 18명이 되어 요청이 한꺼번에 몰렸습니다.</dd>
+          <dt class="d">DECISION</dt><dd>담당자별 요청을 정리하고 우선순위를 정해 하나씩 대응했습니다.</dd>
+          <dt class="r">RESULT</dt><dd>구축 이후 유지보수 기간까지 안정적으로 운영했습니다.</dd>
+        </dl>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column">
+      <h2><small>2023.12 – 2024.03 · 사내 시스템</small>나라장터 연계 입찰정보 시스템</h2>
+      <p class="lead">관심 기관과 키워드를 등록하면 매일 아침 나라장터 공고를 모아 필요한 공고만 보여주는 시스템입니다.</p>
+      <div class="label" style="margin-top:5mm">FLOW</div>
+      <div class="flow">
+        <div class="st"><b>스케줄러</b><span>매일 아침</span></div><div class="ar">→</div>
+        <div class="st"><b>나라장터 API</b><span>공고 수집</span></div><div class="ar">→</div>
+        <div class="st"><b>키워드 필터</b><span>관심 기관 · 키워드</span></div><div class="ar">→</div>
+        <div class="st"><b>제공</b><span>검색 · 알림</span></div>
+      </div>
+      <div class="card" style="margin-top:5mm">
+        <ul class="dot">
+          <li>공고 검색, 키워드 등록, 알림, 즐겨찾기 기능을 개발했습니다.</li>
+          <li>영업 담당자 2명과 대표, 개발팀이 실제 업무에 사용했습니다.</li>
+          <li>지금도 회사 서버에서 운영되고 있습니다.</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:4mm">
+        <div class="label">RELATED</div>
+        <p class="muted">이전 회사의 도로변경정보 시스템 유지관리에서 도로대장 관련 공고를 키워드로 걸러 수집하는 기능을 운영하며 쌓은 경험을 바탕으로 했습니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span>LEE WONSUB · 2026</span><span>07 / 10</span></div>
+</section>
+
+<!-- 08 SERVER -->
+<section class="page">
+  <div class="hd"><span><b>이원섭</b> / 개발 포트폴리오</span><span>SERVER OPERATION · CI/CD</span></div>
+  <h2><small>공간정보 SI 기업 · 입사 2개월 차부터</small>서버 운영과 배포 자동화</h2>
+  <p class="lead">서버 담당자가 퇴사하면서 생긴 공백을 직접 맡았습니다. 연구소·타사 시스템이 함께 올라간 서버를 운영하며 배포를 자동화했습니다.</p>
+
+  <div class="grid g4" style="margin-top:6mm">
+    <div class="card stat"><b>2 · 4</b><span>서버랙 2대 · 물리 서버 4대</span></div>
+    <div class="card stat"><b>5–7개</b><span>운영 서비스 (연구소·타사 포함)</span></div>
+    <div class="card stat"><b>커밋 즉시</b><span>GitLab Webhook + Jenkins 자동 배포</span></div>
+    <div class="card stat"><b>롤백</b><span>이전 버전 복구 + 주기적 백업</span></div>
+  </div>
+
+  <div class="grid" style="grid-template-columns: 1.2fr 1fr; margin-top:6mm">
+    <div class="card">
+      <div class="label">BEFORE → AFTER</div>
+      <div class="grid g2" style="gap:4mm">
+        <div><h3 class="muted">수동 배포</h3>
+          <ul class="dot muted"><li>서버에 직접 접속해 Tomcat 중지</li><li>FTP로 파일 교체</li><li>수동으로 다시 기동</li></ul></div>
+        <div><h3 class="accent">자동 배포</h3>
+          <ul class="dot"><li>GitLab에 커밋하면 Webhook 발생</li><li>Jenkins가 빌드·배포</li><li>배포 시간이 크게 줄고 사람 실수 감소</li></ul></div>
+      </div>
+      <div class="label" style="margin-top:5mm">담당 업무</div>
+      <div class="chips"><span class="chip">포트 관리</span><span class="chip">외부 접근 허용</span><span class="chip">배포</span>
+        <span class="chip">모니터링</span><span class="chip">계정·권한</span><span class="chip">인증서</span><span class="chip">타사 개발자 조율</span></div>
+    </div>
+    <div class="card hi">
+      <h3>자동 배포가 만든 새 장애</h3>
+      <dl class="pdr">
+        <dt class="p">PROBLEM</dt><dd>자동 배포 이후, 다른 개발자가 잘못된 빌드를 올리면 서버가 죽은 상태로 배포됐습니다.</dd>
+        <dt class="d">DECISION</dt><dd>이전 버전으로 바로 되돌리는 롤백 절차를 만들고, 이를 위해 주기적 백업을 설정했습니다.</dd>
+        <dt class="r">RESULT</dt><dd>빌드 오류가 나도 빠르게 서비스를 복구할 수 있게 됐습니다.</dd>
+      </dl>
+      <div class="label" style="margin-top:4mm">DOCKER</div>
+      <p class="muted">직접 설치보다 컨테이너가 관리하기 쉽고 환경 차이로 인한 문제가 적어 적극 활용합니다. AI 프로젝트 납품물도 Docker로 패키징했습니다.</p>
+    </div>
+  </div>
+  <div class="ft"><span>LEE WONSUB · 2026</span><span>08 / 10</span></div>
+</section>
+
+<!-- 09 PERSONAL -->
+<section class="page">
+  <div class="hd"><span><b>이원섭</b> / 개발 포트폴리오</span><span>PERSONAL PROJECT</span></div>
+  <h2><small>2026.10 · 개인 프로젝트</small>AI 리뷰 콘텐츠 자동 제작 파이프라인</h2>
+  <p class="lead">음식 사진·영상과 짧은 메모만 보내면 쇼츠 영상 기획부터 렌더링, 업로드까지 처리하는 파이프라인입니다. 같은 재료로 블로그 글을 게시하는 도구도 함께 만들어 운용했습니다.</p>
+
+  <div class="label" style="margin-top:5mm">PIPELINE</div>
+  <div class="flow">
+    <div class="st"><b>접수</b><span>Telegram 봇<br>메모 파싱</span></div><div class="ar">→</div>
+    <div class="st"><b>검사·분류</b><span>중복·흔들림 검사<br>EXIF · 장소 검색</span></div><div class="ar">→</div>
+    <div class="st"><b>기획</b><span>AI 대본 작성</span></div><div class="ar">⇄</div>
+    <div class="st" style="border-color:#2f4f9e;background:var(--panel2)"><b>검수</b><span>규칙 검사 + AI 채점<br>최대 2회 재작성</span></div><div class="ar">→</div>
+    <div class="st"><b>렌더링</b><span>TTS · 자막<br>FFmpeg 1080×1920</span></div><div class="ar">→</div>
+    <div class="st"><b>업로드</b><span>YouTube API<br>블로그 게시</span></div>
+  </div>
+
+  <div class="grid g3" style="margin-top:6mm">
+    <div class="card">
+      <h3>AI 공급자 추상화</h3>
+      <p class="muted">Gemini·GPT·Claude를 같은 함수 하나로 호출하게 묶었습니다. 무료 한도를 넘으면 다른 모델로 대체하거나 재시도를 예약해 작업이 멈추지 않게 했습니다.</p>
+    </div>
+    <div class="card">
+      <h3>사실만 말하는 대본</h3>
+      <p class="muted">메모에 없는 맛이나 가격을 지어내지 않도록, 코드 규칙 검사와 검수 AI를 이중으로 두고 기준을 넘을 때까지 다시 쓰게 했습니다.</p>
+    </div>
+    <div class="card">
+      <h3>운영하기 쉬운 구조</h3>
+      <p class="muted">말투·구성 규칙을 텍스트 파일로 분리해 재시작 없이 바꿀 수 있게 했고, 단계별 결과를 JSON으로 남겨 어디서 실패했는지 바로 알 수 있게 했습니다.</p>
+    </div>
+  </div>
+  <div class="chips" style="margin-top:5mm">
+    <span class="chip">Python</span><span class="chip">python-telegram-bot</span><span class="chip">Gemini · OpenAI · Claude API</span>
+    <span class="chip">Gemini TTS</span><span class="chip">FFmpeg</span><span class="chip">Pillow</span><span class="chip">YouTube Data API</span>
+    <span class="chip">Kakao Local API</span><span class="chip">Selenium</span>
+  </div>
+  <div class="ft"><span>LEE WONSUB · 2026</span><span>09 / 10</span></div>
+</section>
+
+<!-- 10 HISTORY + CONTACT -->
+<section class="page">
+  <div class="hd"><span><b>이원섭</b> / 개발 포트폴리오</span><span>ALL PROJECTS · CONTACT</span></div>
+  <div class="grid" style="grid-template-columns: 1.45fr 1fr; gap:8mm; flex:1">
+    <div>
+      <h2><small>ALL PROJECTS</small>전체 프로젝트 이력</h2>
+      <ul class="tl" style="margin-top:4mm">
+        <li><span class="when">2025.11 – 2026.05</span><span><b>쇼박스 정산시스템 신규구축</b> <span class="muted">· 정산·CMS 개발</span></span></li>
+        <li><span class="when">2024.09 – 2025.10</span><span><b>인천문화재단 통합 홈페이지 구축·유지보수</b> <span class="muted">· 18개 사이트 통합</span></span></li>
+        <li><span class="when">2024.07 – 2024.11</span><span><b>특수건강검진 DB 직종 재분류 AI</b> <span class="muted">· 안전보건공단</span></span></li>
+        <li><span class="when">2023.12 – 2024.03</span><span><b>나라장터 연계 입찰정보시스템</b> <span class="muted">· 사내 운영 중</span></span></li>
+        <li><span class="when">2023.03 – 2023.06</span><span><b>IoT(Mobius) 센서 관리 플랫폼</b> <span class="muted">· 안전보건공단 · MQTT, 부하 테스트, 시각화</span></span></li>
+        <li><span class="when">2022.09 – 2023.03</span><span><b>도로변경정보 수집시스템 유지관리</b> <span class="muted">· LX · 공고 수집 운영</span></span></li>
+        <li><span class="when">2022.06 – 2022.12</span><span><b>인공지능 학습용 데이터 구축</b> <span class="muted">· 지리정보 라벨링·검수 도구</span></span></li>
+        <li><span class="when">2021.11 – 2022.08</span><span><b>도로변경정보 수집시스템 기능개선</b> <span class="muted">· LX · 도로대장 49종, 지도 표시·갱신 개선</span></span></li>
+        <li><span class="when">2021.07 – 2022.03</span><span><b>충청남도 BIS 구축</b> <span class="muted">· TCP 인터페이스, 웹</span></span></li>
+        <li><span class="when">2021.07 – 2023.03</span><span><b>사내 서버 운영 · CI/CD 구축</b> <span class="muted">· 공간정보 SI 기업</span></span></li>
+      </ul>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:5mm">
+      <div class="card">
+        <div class="label">HOW I WORK</div>
+        <ul class="dot">
+          <li><b>일정과 고객 소통</b> · 일정을 먼저 맞추고, 요청한 사람과 자주 확인합니다.</li>
+          <li><b>팀원 간 소통</b> · 결정과 질의를 기록으로 남겨 누구나 같은 정보를 보게 합니다.</li>
+          <li><b>끝까지 책임</b> · 처음 맡는 기술이나 공백이 생긴 업무도 직접 배워 운영까지 이어갑니다.</li>
+        </ul>
+        <p class="muted" style="margin-top:2mm">주변에서 자주 듣는 말 · 꼼꼼하다, 성실하다, 책임감이 강하다</p>
+      </div>
+      <div class="card hi" style="margin-top:auto">
+        <div class="label">CONTACT</div>
+        <h2 style="font-size:16pt">이원섭</h2>
+        <table class="kv" style="margin-top:2mm">
+          <tr><th>Email</th><td>sub940522@naver.com</td></tr>
+          <tr><th>Phone</th><td>010-9290-7545</td></tr>
+          <tr><th>GitHub</th><td>github.com/sub940522-dev/career-portfolio</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span>LEE WONSUB · 2026</span><span>10 / 10</span></div>
+</section>
+
+</body>
+</html>
