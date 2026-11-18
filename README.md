@@ -6,7 +6,7 @@
 
 - [x] 1. 저장소 생성
 - [x] 2. 경력 내용 정리 — `content/` 에 프로젝트별로 역할·기술·문제 해결·수치 정리
-- [x] 3. 포트폴리오 HTML 작성 (Pages 배포는 공개 전환 후) — 10페이지 구성, `docs/` 에 두고 GitHub Pages 배포
+- [x] 3. 포트폴리오 HTML 작성 — https://sub940522-dev.github.io/career-portfolio/ — 10페이지 구성, `docs/` 에 두고 GitHub Pages 배포
 - [ ] 4. PDF 출력 및 검토 — 코사(SW기술자 경력) 기간·사업명과 대조
 
 ## 문서 구성 (목표)
