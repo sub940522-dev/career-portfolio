@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>이원섭 · 개발 포트폴리오</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
 <style>
   @page { size: 297mm 210mm; margin: 0; }
   :root {
@@ -21,7 +22,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   body {
-    font-family: "Pretendard", "Noto Sans CJK KR", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-family: "Noto Sans KR", "Pretendard", "Noto Sans CJK KR", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
     background: #050b1c; color: var(--text);
     font-size: 11.3pt; line-height: 1.58; letter-spacing: -0.01em;
     word-break: keep-all;
@@ -33,7 +34,10 @@
     page-break-after: always; break-after: page;
   }
   @media print { body { background: var(--bg); } .page { margin: 0; } }
-  @media screen and (max-width: 1150px) { .page { transform-origin: top left; } }
+  @media screen {
+    body { padding: 6mm 0; }
+    .page { box-shadow: 0 6px 30px rgba(0,0,0,0.45); border-radius: 2mm; }
+  }
 
   .hd { display: flex; justify-content: space-between; align-items: baseline;
         font-size: 8.5pt; color: var(--muted); border-bottom: 1px solid var(--line);
@@ -518,5 +522,22 @@
   <div class="ft"><span>LEE WONSUB · 2026</span><span>10 / 10</span></div>
 </section>
 
+<script>
+  // 화면이 A4 가로 폭보다 좁으면 페이지 전체를 비율대로 축소
+  (function () {
+    function fit() {
+      var page = document.querySelector('.page');
+      if (!page) return;
+      document.body.style.zoom = 1;
+      var w = page.offsetWidth + 24;
+      var z = Math.min(1, window.innerWidth / w);
+      document.body.style.zoom = z;
+    }
+    window.addEventListener('resize', fit);
+    if (!window.matchMedia || !window.matchMedia('print').matches) fit();
+    window.addEventListener('beforeprint', function () { document.body.style.zoom = 1; });
+    window.addEventListener('afterprint', fit);
+  })();
+</script>
 </body>
 </html>
